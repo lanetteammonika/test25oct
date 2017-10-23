@@ -1,0 +1,45 @@
+body{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+footer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #000;
+    text-align: center;
+    border-top: 2px solid;
+    border-color: #1A1A1A;
+}
+.container{
+    width:auto;
+    max-width: 900px;
+    padding: 0 15px;
+}
+
+.container .footer-text{
+    margin:20px 0;
+
+}
+
+.badge{
+    background-color: #c4aa43;
+}
+
+button.link {
+    background: none;
+    border: none;
+    margin:0;
+    padding: 3;
+    outline: none;
+    outline-offset: 0;
+    color: white;
+
+}
+.thumbnail-img.thumbnail > img {
+    height: 100%;
+}
+

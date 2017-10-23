@@ -1,7 +1,8 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 
-const rootReducer = combineReducers({
-  state: (state = {}) => state
-});
+import {userReducers} from './userReducers';
 
-export default rootReducer;
+
+export default combineReducers({
+    users:userReducers,
+})
