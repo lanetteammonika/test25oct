@@ -230,7 +230,7 @@ onClick() {
                                 className='files-dropzone'
                                 onChange={this.onFilesChange}
                                 onError={this.onFilesError}
-                                accepts={['image/png', 'text/plain', 'audio/*']}
+                                accepts={['image/*', 'text/plain', 'audio/*']}
                                 multiple
                                 maxFiles={3}
                                 maxFileSize={10000000}

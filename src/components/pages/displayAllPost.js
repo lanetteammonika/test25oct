@@ -74,24 +74,7 @@ class DisplayPost extends Component {
 
     render() {
 
-        function imageFormatter(cell, row) {
-            return "<img style=width:20px src='" + cell + "' />";
-        }
-
-        const products = [
-            {
-                email: "sdfd",
-                image: "https://cdn4.iconfinder.com/data/icons/colicon/24/close_delete-128.png",
-                name: {
-                    _id: 1,
-                    nam: "sdfcdsf"
-                }
-
-            }
-        ];
-
-
-        return (
+       return (
             <Well>
                 <Row>
                     <Col xs={12}>

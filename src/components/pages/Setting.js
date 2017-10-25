@@ -12,9 +12,9 @@ import {
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import Picker from 'emoji-mart'
 import UserDashboard from './imageComponent';
 import AddPost from './UserDashboard'
-
 import 'react-datepicker/dist/react-datepicker.css';
 class Setting extends Component {
 
@@ -266,6 +266,9 @@ console.log('dateee---',m)
                                 </Tab>
                                 <Tab eventKey={3} title="Add Post">
                                     <AddPost />
+                                </Tab>
+                                <Tab eventKey={4} title="Aost">
+                                    tab 4
                                 </Tab>
                             </Tabs>
 
