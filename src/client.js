@@ -1,5 +1,5 @@
 "use strict"
-import {createStore, applyMiddleware} from 'redux';
+import { createStore, applyMiddleware} from 'redux';
 import logger from 'redux-logger';
 import React from 'react';
 import {render} from 'react-dom';
@@ -10,6 +10,8 @@ import reducers from './reducers/index';
 ///import {addToCart} from './actions/cardActions';
 ///import {postBooks, deleteBooks, updateBooks} from './actions/booksActions';
 import SignUp from './components/pages/signUp';
+import Likes from './components/pages/Likes';
+
 import UserLogin from './components/pages/UserLogin';
 import UserDashboard from './components/pages/imageComponent';
 import AddPost from './components/pages/UserDashboard'
@@ -36,10 +38,14 @@ const Routes = (
         <div>
         <Router history={browserHistory} >
             <Route path="/" component={Main}>
-                <IndexRoute component={UserLogin} />
+                <IndexRoute component={Likes} />
                 <Route path="/signup" component={SignUp}/>
+                <Route path="/login" component={UserLogin}/>
+                <Route path="/updateprofile" component={Likes}/>
+
                 <Route path="/userdashboard" component={UserDashboard} />
                 <Route path="/changepassword/:id" component={ChangePassword}/>
+
                 <Route path="/alluser" component={AllUser}/>
                 <Route path="/allpost" component={AllPost}/>
                 <Route path="/setting" component={Setting}/>

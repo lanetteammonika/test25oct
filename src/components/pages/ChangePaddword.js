@@ -66,6 +66,8 @@ class ChangePassword extends Component {
     }
 
     changePassword() {
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('role');
         debugger
         const id = this.props.location.pathname.split('/')[2];
         const password=findDOMNode(this.refs.password).value;
@@ -78,7 +80,7 @@ if(password !== "" && confirmpassword !== ""){
                         password: findDOMNode(this.refs.password).value
                     }
                 this.props.changepassword(user,()=>{
-                    this.props.history.push("/");
+                    this.props.history.push("/login");
                 });
             }else{
                 this.setState({msg:'confirm password not match'})
@@ -121,7 +123,9 @@ if(password !== "" && confirmpassword !== ""){
                             <Button bsStyle="primary" onClick={this.changePassword.bind(this)}>
                                 Change Password
                             </Button>
-
+                            <Button bsStyle="primary" style={{marginLeft:"15px"}}  onClick={()=>this.props.history.push("/updateprofile")}>
+                                Cancel
+                            </Button>
                         </Panel>
 
                     </Col>

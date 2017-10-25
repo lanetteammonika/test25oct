@@ -1,16 +1,21 @@
 import React, {Component} from 'react';
 import {
     Well,
-    ControlLabel,
-    FormGroup,
-    FormControl,
+    Tabs,
+    Tab,
+    Thumbnail,
     Panel,
     Button,
     Row,
     Col
 } from 'react-bootstrap';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import UserDashboard from './imageComponent';
+import AddPost from './UserDashboard'
 
+import 'react-datepicker/dist/react-datepicker.css';
 class Setting extends Component {
 
     constructor(props) {
@@ -18,15 +23,28 @@ class Setting extends Component {
         this.state = {
             imgSrc: [],
             file: '',
-            user:''
+            user:'',
+            startDate: moment(),
+            date:'',
+            post:[]
+
         }
+        this.handleChange = this.handleChange.bind(this);
+
+    }
+
+    handleChange(date) {
+        this.setState({
+            startDate: date
+        });
+        console.log('date--->',date_d)
     }
 
     getInitialState() {
         return {file: []}
     }
 
-    componentDidMount() {
+    componentWillMount() {
         const url = 'http://localhost:4000/getuser/' + sessionStorage.getItem('userId');
         axios.post(url)
             .then((res) => {
@@ -34,6 +52,19 @@ class Setting extends Component {
                 console.log('user-----', res.data.user[0]);
                 this.setState({user: res.data.user[0]})
                 console.log(this.state.user);
+
+            })
+            .catch((err) => {
+
+                console.log(err);
+            })
+        const url2 = 'http://localhost:4000/getuserpost/' + sessionStorage.getItem('userId');
+        axios.post(url2)
+            .then((res) => {
+
+                console.log('user-----', res.data.posts);
+                this.setState({posts: res.data.posts})
+                console.log(this.state.posts);
 
             })
             .catch((err) => {
@@ -68,6 +99,8 @@ class Setting extends Component {
                     'content-type': 'multipart/form-data'
                 }
             }
+            console.log('handle uploading-', this.state.file);
+
             return axios.post(url, formData, config)
                 .then((res) => {
                     debugger
@@ -101,42 +134,152 @@ class Setting extends Component {
 
     }
 
+    onDelete(id){
+        const url2 = 'http://localhost:4000/deletepost/' + id;
+        axios.delete(url2)
+            .then((res) => {
+
+                console.log('user-----', res.data);
+
+
+            })
+            .catch((err) => {
+
+                console.log(err);
+            })
+        const url3 = 'http://localhost:4000/getuserpost/' + sessionStorage.getItem('userId');
+        axios.post(url3)
+            .then((res) => {
+
+                console.log('user-----', res.data.posts);
+                this.setState({posts: res.data.posts})
+                console.log(this.state.posts);
+
+            })
+            .catch((err) => {
+
+                console.log(err);
+            })
+    }
+
     render() {
-        return (
-            <Well>
-                <Row>
+        if(this.state.user !== '' && this.state.posts !== []) {
+            const d = this.state.user.date;
+            const m = d.substring(4, 15);
+console.log('dateee---',m)
+            return (
+                <Well>
+                    <Row>
 
-                    <Col xs={12} sm={8} smOffset={2}>
-                        <Panel>
-                            <FormGroup controlId="image">
+                        <Col xs={12}>
+                            <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+                                <Tab eventKey={1} title="Profile">
+                                    <Panel>
+                                        <div className="files">
 
-                                <ControlLabel>select Image</ControlLabel>
-                                <input ref="file" type="file" onChange={(e) => this._handleImageChange(e)}/>
-                                <img src={this.state.imgSrc}
-                                     style={{height: '80px', width: '80px', marginTop: '15px'}}/>
-                                <FormControl.Feedback/>
+                                            <img
+                                                src={this.state.user.image}
+                                                style={{
+                                                    height: '150px',
+                                                    width: '150px',
+                                                    borderRadius: '50%',
+                                                    marginLeft: 'auto',
+                                                    marginRight: 'auto',
+                                                    display: 'block'
+                                                }}
+                                            />
+                                        </div>
+                                        <div style={{
+                                            marginLeft: 'auto',
+                                            marginRight: 'auto',
+                                            display: 'table',
+                                            marginTop: '15px'
+                                        }}>
 
-                            </FormGroup>
-                            <Button bsStyle="primary" onClick={(e) => this._handleSubmit(e)}>
-                                upload
-                            </Button>
-                        </Panel>
-                        <Panel>
+                                            <div style={{
+                                                marginLeft: 'auto',
+                                                marginRight: 'auto',
+                                                display: 'inline-flex',
+                                                color: '#276A9C'
+                                            }}>
+
+                                                <h5 style={{
+                                                    marginLeft: 'auto',
+                                                    marginRight: 'auto',
+                                                    display: 'table',
+                                                    paddingBottom: '5px'
+                                                }}>{this.state.user.name}</h5>
+
+                                            </div>
+                                        </div>
+                                        <div style={{
+                                            marginLeft: 'auto',
+                                            marginRight: 'auto',
+                                            display: 'table',
+
+                                        }}>
+
+                                            <div style={{
+                                                marginLeft: 'auto',
+                                                marginRight: 'auto',
+                                                display: 'inline-flex',
+                                                color: '#276A9C'
+                                            }}>
+                                                <h5 style={{
+                                                    marginLeft: 'auto',
+                                                    marginRight: 'auto',
+                                                    display: 'table',
+                                                    paddingBottom: '5px'
+                                                }}>{this.state.user.email}</h5>
+                                            </div>
+                                        </div>
+
+                                        <div style={{
+                                            marginLeft: 'auto',
+                                            marginRight: 'auto',
+                                            display: 'table',
+                                            marginTop: '15px'
+                                        }}>
+                                            <Button bsStyle="primary" onClick={() => this.props.history.push("/updateprofile")}>
+                                                Edit Profile
+                                            </Button>
+
+                                        </div>
+
+                                    </Panel>
+                                </Tab>
+                                <Tab eventKey={2} title="All Post">
+                                    {this.state.posts.map((data, index) => {
+                                        return (
+                                            <Panel>
+                                                <h3>{data.title}</h3>
+                                                <p>{data.description}</p>
+                                                <Thumbnail className="thumbnail-img" src={data.image}
+                                                           style={{width: '50%', margin: '0 auto', height: '300px',}}
+                                                           alt="50x50"/>
+                                                <Button bsStyle="primary" onClick={this.onDelete.bind(this,data._id)}>
+                                                    Delete
+                                                </Button>
+                                            </Panel>
+                                        )})}
+
+                                </Tab>
+                                <Tab eventKey={3} title="Add Post">
+                                    <AddPost />
+                                </Tab>
+                            </Tabs>
 
 
-                                <ControlLabel>Current Profile Image</ControlLabel>
-
-                                <img src={this.state.user.image}
-                                     style={{height: '80px', width: '80px', marginTop: '15px'}}/>
-
-
-
-
-                        </Panel>
-                    </Col>
-                </Row>
-            </Well>
-        )
+                        </Col>
+                    </Row>
+                </Well>
+            )
+        }
+        else{
+            return(
+                <div>loading..</div>
+            )
+        }
     }
 }
 

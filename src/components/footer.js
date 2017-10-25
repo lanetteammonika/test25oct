@@ -6,7 +6,7 @@ class Footer extends Component{
         return(
             <footer className="footer text-center">
                 <div className="container">
-                    <p className="footer-text">copyright 2017 BookShop. All rights reserved</p>
+                    <p className="footer-text" style={{color:'#FFF'}}>copyright 2017 BookShop. All rights reserved</p>
                 </div>
             </footer>
         );

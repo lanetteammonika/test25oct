@@ -9,7 +9,7 @@ footer {
     bottom: 0;
     left: 0;
     padding: 1rem;
-    background-color: #000;
+    background-color: #093B87;
     text-align: center;
     border-top: 2px solid;
     border-color: #1A1A1A;
@@ -22,6 +22,7 @@ footer {
 
 .container .footer-text{
     margin:20px 0;
+    text-color: #FFF
 
 }
 

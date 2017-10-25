@@ -62,6 +62,8 @@ class UserDashboard extends Component {
         // TODO: do something with -> this.state.file
         console.log('handle uploading-', this.state.file);
         this.fileUpload(this.state.file)
+        window.location.reload();
+
     }
 
     _handleImageChange(e) {
@@ -163,10 +165,7 @@ class UserDashboard extends Component {
                     upload
                 </Button>
 
-                        <br />
-                        <Button bsStyle="danger" style={{marginLeft:"15px",marginTop:"15px"}} onClick={(e) => this.onLogout()}>
-                            logout
-                        </Button>
+
                     </Panel>
                 </Col>
             </Row>

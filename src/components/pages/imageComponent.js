@@ -16,7 +16,6 @@ import axios from 'axios';
 import {findDOMNode} from 'react-dom';
 import Comment from './Comments'
 
-
 class Image extends Component {
     constructor(props) {
         super(props);
@@ -31,7 +30,8 @@ class Image extends Component {
             commentId:[],
             likeId:[],
             name:'',
-            image:''
+            image:'',
+
         }
 
         this.onCommentClick =this.onCommentClick.bind(this)
@@ -71,6 +71,7 @@ class Image extends Component {
                 console.log('error---', err)
             })
     }
+
     onLikeClick(i){
 
         const commentPost = {
@@ -90,7 +91,17 @@ class Image extends Component {
             .catch((err) => {
                 console.log(err);
             })
-        window.location.reload();
+        axios.get('http://localhost:4000/getAllPost')
+            .then((res) => {
+
+                console.log('resposeee---', res.data.posts);
+                this.setState({posts: res.data.posts})
+
+            })
+            .catch((err) => {
+
+                console.log('error---', err)
+            })
     }
     onCommentClick(i) {
 
@@ -152,10 +163,10 @@ class Image extends Component {
 
                                     <Panel>
                                         <img src={com.userId.image}
-                                             style={{width: '5%', marginTop: '5px'}}
+                                             style={{height: '50px',width: '50px',borderRadius: '50%', marginTop: '5px'}}
                                         />
                                         <p style={{color: '#00bfff'}}>{com.userId.name}</p>
-                                        <p style={{color: '#00bfff'}}>{com.createdAt}</p>
+                                        <p style={{color: '#00bfff'}}>{com.createdAt.split('T')[0].toString()}  {com.createdAt.split('T')[1].split('.')[0].toString()}</p>
                                         <p style={{color: '#00bfff'}}>{com.comment}</p>
 
                                     </Panel>
@@ -195,7 +206,7 @@ class Image extends Component {
                                     return (
                                         <Panel>
                                             <img src={com.image}
-                                                 style={{width: '5%', marginTop: '5px'}}
+                                                 style={{height: '50px',width: '50px',borderRadius: '50%',marginTop: '5px'}}
                                             />
                                             <p style={{color: '#00bfff'}}>{com.name}</p>
 
@@ -206,7 +217,7 @@ class Image extends Component {
                                 }))
                                 :
 
-                                ( <p>No comment in this post</p>)
+                                ( <p>No like in this post</p>)
 
                             }
 
@@ -236,15 +247,16 @@ class Image extends Component {
                                 return (
                                     <Panel>
                                         <img src={data.userId.image}
-                                             style={{width: '5%'}}
+                                             style={{height: '50px',width: '50px',borderRadius: '50%'}}
                                         />
                                         <label style={{marginLeft: '15px'}}>{data.userId.name}</label>
-                                        <p>{data.createdAt}</p>
-                                        <Thumbnail className="thumbnail-img" src={data.image}
-                                                   style={{width: '50%', margin: '0 auto', height: '300px'}}
-                                                   alt="50x50"/>
+                                        <p>{data.createdAt.split('T')[0].toString()}  {data.createdAt.split('T')[1].split('.')[0].toString()}</p>
                                         <h3>{data.title}</h3>
                                         <p>{data.description}</p>
+                                        <Thumbnail className="thumbnail-img" src={data.image}
+                                                   style={{width: '50%', margin: '0 auto', height: '300px',}}
+                                                   alt="50x50"/>
+
 
                                         <Panel>
                                             <div style={{display: 'inline'}}>
@@ -255,7 +267,7 @@ class Image extends Component {
                                                 />
                                             </div>
                                             <div style={{display: 'inline-block'}}>
-                                                <p style={{color: '#FFF'}}> Comments</p>
+                                                <p style={{color: '#000'}}> Comments</p>
                                             </div>
                                             <div style={{display: 'inline', marginLeft: '15px'}}>
                                                 <img
@@ -265,11 +277,11 @@ class Image extends Component {
                                                 />
                                             </div>
                                             <div style={{display: 'inline-block'}}>
-                                                <p style={{color: '#FFF'}}>{data.likeId.length} Like</p>
+                                                <p style={{color: '#000'}}>{data.likeId.length} Like</p>
                                             </div>
                                         </Panel>
                                         <img src={this.state.user.image}
-                                             style={{width: '5%'}}
+                                             style={{height: '50px',width: '50px',borderRadius: '50%'}}
                                         />
                                         <label style={{marginLeft: '15px'}}>{this.state.user.name}</label>
 

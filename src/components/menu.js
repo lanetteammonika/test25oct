@@ -43,7 +43,7 @@ class Menu extends Component {
                     {sessionStorage.getItem('userId') === null
                         ? (<div><Nav>
 
-                        <NavItem eventKey={1} href="/">
+                        <NavItem eventKey={1} href="/login">
                             Login
                         </NavItem>
                         < NavItem eventKey={2} href="/signup"> SignUp </NavItem>
@@ -57,9 +57,7 @@ class Menu extends Component {
                             </NavItem>
 
 
-                            <NavItem eventKey={3} href="/addpost">
-                                AddPost
-                            </NavItem>
+
 
                             <NavItem eventKey={3} href="/setting">
                                 Setting
@@ -68,7 +66,10 @@ class Menu extends Component {
 
                         </Nav>
                         <Nav pullRight>
-                            <a style={{color: 'red'}} href="/" onClick={this.logout}>Logout</a>
+                            <NavItem eventKey={3} href="/" onClick={this.logout}>
+                                Logout
+                            </NavItem>
+
                         </Nav>
                     </div>)}
 
@@ -77,8 +78,8 @@ class Menu extends Component {
                         <Nav pullRight>
                             <NavItem eventKey={1} href="/alluser">All User</NavItem>
                             <NavItem eventKey={2} href="/allpost">All Post Comment</NavItem>
-
-                        </Nav> )
+                        </Nav>
+                    )
                         : ('')
                     }
 
