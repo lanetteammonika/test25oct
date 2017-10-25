@@ -38,7 +38,7 @@ const Routes = (
         <div>
         <Router history={browserHistory} >
             <Route path="/" component={Main}>
-                <IndexRoute component={Likes} />
+                <IndexRoute component={UserLogin} />
                 <Route path="/signup" component={SignUp}/>
                 <Route path="/login" component={UserLogin}/>
                 <Route path="/updateprofile" component={Likes}/>
