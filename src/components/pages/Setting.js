@@ -10,10 +10,7 @@ import {
     Col
 } from 'react-bootstrap';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import Picker from 'emoji-mart'
-import UserDashboard from './imageComponent';
 import AddPost from './UserDashboard'
 import 'react-datepicker/dist/react-datepicker.css';
 class Setting extends Component {
@@ -76,8 +73,8 @@ class Setting extends Component {
     _handleSubmit(e) {
         e.preventDefault();
         // TODO: do something with -> this.state.file
-        console.log('handle uploading-', this.state.file);
-        this.fileUpload(this.state.file)
+        //console.log('handle uploading-', this.state.file);
+       // this.fileUpload(this.state.file)
         window.location.reload();
 
         //axios.post('')
@@ -86,13 +83,9 @@ class Setting extends Component {
     fileUpload(file) {
         debugger
         if (file !== '') {
-            //const title= findDOMNode(this.refs.title).value;
-            // const description= findDOMNode(this.refs.description).value
             const url = 'http://localhost:4000/uploadprofile/' + sessionStorage.getItem('userId');
             console.log('url---', url)
             const formData = new FormData();
-            //formData.append('title', title)
-            //formData.append('description', description)
             formData.append('userPhoto', file)
             const config = {
                 headers: {
@@ -100,7 +93,6 @@ class Setting extends Component {
                 }
             }
             console.log('handle uploading-', this.state.file);
-
             return axios.post(url, formData, config)
                 .then((res) => {
                     debugger
@@ -121,7 +113,6 @@ class Setting extends Component {
         debugger
         let reader = new FileReader();
         let file = this.refs.file.files[0];
-
         reader.onloadend = function (e) {
             this.setState({
                 imgSrc: [reader.result],
@@ -129,48 +120,35 @@ class Setting extends Component {
             });
         }.bind(this);
         console.log('handle uploading-', this.state.imgSrc);
-
         reader.readAsDataURL(file)
-
     }
 
     onDelete(id){
         const url2 = 'http://localhost:4000/deletepost/' + id;
         axios.delete(url2)
             .then((res) => {
-
                 console.log('user-----', res.data);
-
-
             })
             .catch((err) => {
-
                 console.log(err);
             })
         const url3 = 'http://localhost:4000/getuserpost/' + sessionStorage.getItem('userId');
         axios.post(url3)
             .then((res) => {
-
                 console.log('user-----', res.data.posts);
                 this.setState({posts: res.data.posts})
                 console.log(this.state.posts);
-
             })
             .catch((err) => {
-
                 console.log(err);
             })
     }
 
     render() {
         if(this.state.user !== '' && this.state.posts !== []) {
-            const d = this.state.user.date;
-            const m = d.substring(4, 15);
-console.log('dateee---',m)
             return (
                 <Well>
                     <Row>
-
                         <Col xs={12}>
                             <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
                                 <Tab eventKey={1} title="Profile">
@@ -195,7 +173,6 @@ console.log('dateee---',m)
                                             display: 'table',
                                             marginTop: '15px'
                                         }}>
-
                                             <div style={{
                                                 marginLeft: 'auto',
                                                 marginRight: 'auto',
@@ -216,9 +193,7 @@ console.log('dateee---',m)
                                             marginLeft: 'auto',
                                             marginRight: 'auto',
                                             display: 'table',
-
                                         }}>
-
                                             <div style={{
                                                 marginLeft: 'auto',
                                                 marginRight: 'auto',
@@ -233,7 +208,6 @@ console.log('dateee---',m)
                                                 }}>{this.state.user.email}</h5>
                                             </div>
                                         </div>
-
                                         <div style={{
                                             marginLeft: 'auto',
                                             marginRight: 'auto',
@@ -243,9 +217,7 @@ console.log('dateee---',m)
                                             <Button bsStyle="primary" onClick={() => this.props.history.push("/updateprofile")}>
                                                 Edit Profile
                                             </Button>
-
                                         </div>
-
                                     </Panel>
                                 </Tab>
                                 <Tab eventKey={2} title="All Post">
@@ -262,17 +234,11 @@ console.log('dateee---',m)
                                                 </Button>
                                             </Panel>
                                         )})}
-
                                 </Tab>
                                 <Tab eventKey={3} title="Add Post">
                                     <AddPost />
                                 </Tab>
-                                <Tab eventKey={4} title="Aost">
-                                    tab 4
-                                </Tab>
                             </Tabs>
-
-
                         </Col>
                     </Row>
                 </Well>

@@ -34,19 +34,14 @@ class ChangePassword extends Component {
 
         axios.get('http://localhost:4000/gettokenrecord/' + id)
             .then(function (res) {
-                debugger
-                console.log('response from change password-----', res.data.token);
-
-
+                console.log('response from change password-----', res.data.token)
             })
             .catch(function (err) {
-                debugger
-                console.log(err);
-
+                console.log(err)
             })
         axios.delete('http://localhost:4000/removetoken/' + id)
             .then(function (res) {
-                debugger
+
                 console.log('response from change password-----', res.data);
 
 
@@ -58,7 +53,7 @@ class ChangePassword extends Component {
 
             })
             .catch(function (err) {
-                debugger
+
                 console.log(err);
 
             })
@@ -68,7 +63,7 @@ class ChangePassword extends Component {
     changePassword() {
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('role');
-        debugger
+
         const id = this.props.location.pathname.split('/')[2];
         const password=findDOMNode(this.refs.password).value;
         const confirmpassword=findDOMNode(this.refs.confirmpassword).value

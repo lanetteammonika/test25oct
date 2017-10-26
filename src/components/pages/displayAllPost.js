@@ -49,11 +49,15 @@ function showDescription(cell, row) {
     return cell.name;
 }
 
-//selectRow={ selectRowProp }
+
 class DisplayPost extends Component {
     constructor(props) {
         super(props);
-        this.state = {comments: []}
+        this.state = {
+            comments: [],
+            delcomment:'delete',
+            selected: []
+        }
     }
 
     componentDidMount() {
@@ -66,20 +70,55 @@ class DisplayPost extends Component {
                 console.log('error---', err)
             })
     }
-
+    onRowSelect(row, isSelected){
+        if (isSelected) {
+            this.state.selected.push(row._id);
+        } else {
+            let index = this.state.selected.indexOf(row);
+            if (index !== -1) this.state.selected.splice(index, 1);
+        }
+    }
     handleRender() {
         this.props.history.push("/userdashboard");
 
     }
 
+    getId(){
+        const obj={
+            selectedId:this.state.selected
+        }
+        console.log('id--->',obj)
+        const url = 'http://localhost:4000/deletecomment';
+        axios.post(url, obj)
+            .then((res) => {
+                debugger
+                console.log('comment-----', res.data);
+                // this.setState({user:res.data.user[0]})
+                // console.log(this.state.user);
+
+            })
+            .catch((err) => {
+
+                console.log(err);
+            })
+    }
+
     render() {
+        var selectRowProp = {
+            mode: "checkbox",
+            width: "40px",
+            bgColor: "rgb(206, 206, 206)",
+            onSelect: this.onRowSelect.bind(this)
+        };
 
        return (
             <Well>
                 <Row>
                     <Col xs={12}>
                         <Panel>
-                            <BootstrapTable data={ this.state.comments } cellEdit={ cellEditProp } >
+
+
+                            <BootstrapTable data={ this.state.comments } selectRow={selectRowProp}cellEdit={ cellEditProp } >
                                 <TableHeaderColumn dataField='_id' hidden={true} isKey>Comment ID</TableHeaderColumn>
                                 <TableHeaderColumn dataField='frdId' dataFormat={showDescription} width='20%' editable={false}>Post Upload By</TableHeaderColumn>
                                 <TableHeaderColumn dataField="userId" dataFormat={showDescription} width='20%' editable={false}>On Post Comment By </TableHeaderColumn>
@@ -90,6 +129,10 @@ class DisplayPost extends Component {
                             <Button bsStyle="warning" style={{marginLeft: "15px"}}
                                     onClick={this.handleRender.bind(this)}>
                                 Back
+                            </Button>
+                            <Button bsStyle="danger" style={{marginLeft: "15px"}}
+                                    onClick={this.getId.bind(this)}>
+                                Delete
                             </Button>
                         </Panel>
                     </Col>

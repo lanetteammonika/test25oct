@@ -31,6 +31,7 @@ class Image extends Component {
             likeId:[],
             name:'',
             image:'',
+            nam:''
 
         }
 
@@ -115,7 +116,7 @@ class Image extends Component {
             const url = 'http://localhost:4000/commentpost/';
             axios.post(url, commentPost)
                 .then((res) => {
-                    debugger
+
                     console.log('comment-----', res.data);
                     // this.setState({user:res.data.user[0]})
                     // console.log(this.state.user);
@@ -148,6 +149,7 @@ class Image extends Component {
         //console.log(findDOMNode(this.refs.comments).value)
         console.log(event.target.value)
         this.setState({comment: event.target.value})
+
     }
 
     onGiveComment() {
@@ -307,6 +309,7 @@ class Image extends Component {
                                                 placeholder="Enter an Comment"
                                                 ref="comments"
                                                 onChange={this.onClick.bind(this)}
+                                                value=""
                                             />
                                             <FormControl.Feedback/>
 

@@ -28,6 +28,13 @@ module.exports = {
     },
     devServer: {
         historyApiFallback: true,
-        contentBase: './'
-    }
+        contentBase: './',
+        inline:true,
+        hot:true,
+        open:true
+    },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+// other plugins
+    ]
 };

@@ -18,7 +18,6 @@ export function userReducers(state = {}, action) {
             console.log(state);
             return {...state,users:action.payload,msg:null}
             break;
-
     }
     return state;
 }
